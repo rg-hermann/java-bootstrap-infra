@@ -4,7 +4,7 @@ k8s-helm-templates:
 
   image:
     repository: ghcr.io/rg-hermann/java-bootstrap
-    tag: latest # Em dev costumamos usar latest ou a branch main
+    tag: "4716c16ce49ce2cb82d5d215e6fc82b3f88e9f09"
     pullPolicy: Always
 
   service:
