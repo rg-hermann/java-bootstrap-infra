@@ -7,5 +7,5 @@ appVersion: "1.0.0"
 
 dependencies:
   - name: k8s-helm-templates
-    version: "0.1.0" # A versão definida no Chart.yaml do seu repo de templates
+    version: "0.1.0"
     repository: "https://raw.githubusercontent.com/rg-hermann/k8s-helm-templates/main/"
