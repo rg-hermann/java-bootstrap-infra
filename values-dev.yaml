@@ -1,16 +1,13 @@
 # Note que os valores ficam identados abaixo do nome da dependência
 k8s-helm-templates:
   replicaCount: 1
-
   image:
     repository: ghcr.io/rg-hermann/java-bootstrap
-    tag: "e1e318882df1374eedc7448cf6534cb6e8834872"
+    tag: "613f3ded4ef7710e7ac3222af769746d2788d219"
     pullPolicy: Always
-
   service:
     type: ClusterIP
     port: 8080
-
   ingress:
     enabled: true
     className: "nginx"
@@ -19,11 +16,9 @@ k8s-helm-templates:
         paths:
           - path: /
             pathType: ImplementationSpecific
-
   env:
     SPRING_PROFILES_ACTIVE: dev
     JAVA_OPTS: "-XX:MaxRAMPercentage=75.0 -XX:InitialRAMPercentage=50.0"
-    
   resources:
     limits:
       cpu: 500m
