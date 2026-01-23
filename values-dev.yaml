@@ -1,28 +1,49 @@
-# Note que os valores ficam identados abaixo do nome da dependência
 k8s-helm-templates:
   replicaCount: 1
+
   image:
     repository: ghcr.io/rg-hermann/java-bootstrap
-    tag: "613f3ded4ef7710e7ac3222af769746d2788d219"
+    tag: "latest" 
     pullPolicy: Always
+
+  config:
+    SPRING_PROFILES_ACTIVE: "dev"
+    SERVER_PORT: "8080"
+    LOGGING_LEVEL_ROOT: "INFO"
+    JAVA_OPTS: "-XX:MaxRAMPercentage=75.0 -XX:InitialRAMPercentage=50.0"
+
+  secrets:
+    DB_PASSWORD: "dev_password_123"
+    API_KEY: "dev-key-789"
+
+  resources:
+    limits:
+      cpu: 500m
+      memory: 768Mi
+    requests:
+      cpu: 200m
+      memory: 512Mi
+
   service:
     type: ClusterIP
-    port: 8080
+    port: 80
+
   ingress:
     enabled: true
     className: "nginx"
+    annotations:
+      nginx.ingress.kubernetes.io/rewrite-target: /
     hosts:
       - host: java-bootstrap.local
         paths:
           - path: /
-            pathType: ImplementationSpecific
-  env:
-    SPRING_PROFILES_ACTIVE: dev
-    JAVA_OPTS: "-XX:MaxRAMPercentage=75.0 -XX:InitialRAMPercentage=50.0"
-  resources:
-    limits:
-      cpu: 500m
-      memory: 512Mi
-    requests:
-      cpu: 200m
-      memory: 384Mi
+            pathType: Prefix
+
+  probes:
+    liveness:
+      initialDelay: 40
+    readiness:
+      initialDelay: 30
+
+  autoscaling:
+    enabled: false
