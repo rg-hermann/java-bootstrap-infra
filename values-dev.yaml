@@ -4,7 +4,7 @@ k8s-helm-templates:
 
   image:
     repository: ghcr.io/rg-hermann/java-bootstrap
-    tag: "4716c16ce49ce2cb82d5d215e6fc82b3f88e9f09"
+    tag: "e1e318882df1374eedc7448cf6534cb6e8834872"
     pullPolicy: Always
 
   service:
