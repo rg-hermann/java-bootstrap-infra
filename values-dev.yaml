@@ -1,0 +1,33 @@
+# Note que os valores ficam identados abaixo do nome da dependência
+k8s-helm-templates:
+  replicaCount: 1
+
+  image:
+    repository: ghcr.io/rg-hermann/java-bootstrap
+    tag: latest # Em dev costumamos usar latest ou a branch main
+    pullPolicy: Always
+
+  service:
+    type: ClusterIP
+    port: 8080
+
+  ingress:
+    enabled: true
+    className: "nginx"
+    hosts:
+      - host: java-bootstrap.local
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+
+  env:
+    SPRING_PROFILES_ACTIVE: dev
+    JAVA_OPTS: "-XX:MaxRAMPercentage=75.0 -XX:InitialRAMPercentage=50.0"
+    
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 200m
+      memory: 384Mi

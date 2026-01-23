@@ -1,0 +1,11 @@
+apiVersion: v2
+name: java-bootstrap-infra
+description: GitOps configuration for Java Bootstrap Application
+type: application
+version: 1.0.0
+appVersion: "1.0.0"
+
+dependencies:
+  - name: k8s-helm-templates
+    version: "0.1.0" # A versão definida no Chart.yaml do seu repo de templates
+    repository: "https://raw.githubusercontent.com/rg-hermann/k8s-helm-templates/main/"
