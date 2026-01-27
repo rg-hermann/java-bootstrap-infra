@@ -1,21 +1,17 @@
 k8s-helm-templates:
   replicaCount: 1
-
   image:
     repository: ghcr.io/rg-hermann/java-bootstrap
-    tag: "latest" 
+    tag: "08417053a127f4dd0531108ca65daa59a9c82994"
     pullPolicy: Always
-
   config:
     SPRING_PROFILES_ACTIVE: "dev"
     SERVER_PORT: "8080"
     LOGGING_LEVEL_ROOT: "INFO"
     JAVA_OPTS: "-XX:MaxRAMPercentage=75.0 -XX:InitialRAMPercentage=50.0"
-
   secrets:
     DB_PASSWORD: "dev_password_123"
     API_KEY: "dev-key-789"
-
   resources:
     limits:
       cpu: 500m
@@ -23,11 +19,9 @@ k8s-helm-templates:
     requests:
       cpu: 200m
       memory: 512Mi
-
   service:
     type: ClusterIP
     port: 8080
-
   ingress:
     enabled: true
     className: "nginx"
@@ -38,12 +32,10 @@ k8s-helm-templates:
         paths:
           - path: /
             pathType: Prefix
-
   probes:
     liveness:
       initialDelay: 40
     readiness:
       initialDelay: 30
-
   autoscaling:
     enabled: false
