@@ -22,6 +22,7 @@ k8s-helm-templates:
   service:
     type: ClusterIP
     port: 8080
+    targetPort: 8080
   ingress:
     enabled: true
     className: "nginx"
@@ -32,10 +33,21 @@ k8s-helm-templates:
         paths:
           - path: /
             pathType: Prefix
-  probes:
-    liveness:
-      initialDelay: 40
-    readiness:
-      initialDelay: 30
+  livenessProbe:
+    httpGet:
+      path: /actuator/health/liveness
+      port: 8080
+    initialDelaySeconds: 40
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 3
+  readinessProbe:
+    httpGet:
+      path: /actuator/health/readiness
+      port: 8080
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 3
   autoscaling:
     enabled: false

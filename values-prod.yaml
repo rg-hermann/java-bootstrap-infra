@@ -6,15 +6,36 @@ k8s-helm-templates:
     tag: "1.0.0"
     pullPolicy: IfNotPresent
 
-  autoscaling:
-    enabled: true
-    minReplicas: 3
-    maxReplicas: 10
-    targetCPUUtilizationPercentage: 75
+  config:
+    SPRING_PROFILES_ACTIVE: "prod"
+    SERVER_PORT: "8080"
+    LOGGING_LEVEL_ROOT: "WARN"
+    JAVA_OPTS: "-XX:MaxRAMPercentage=80.0 -XX:InitialRAMPercentage=50.0"
 
-  env:
-    SPRING_PROFILES_ACTIVE: prod
-    JAVA_OPTS: "-XX:MaxRAMPercentage=80.0"
+  secrets:
+    DB_PASSWORD: "prod_password_secure"
+    API_KEY: "prod-key-secure"
+
+  service:
+    type: ClusterIP
+    port: 80
+    targetPort: 8080
+
+  ingress:
+    enabled: true
+    className: "nginx"
+    annotations:
+      nginx.ingress.kubernetes.io/rewrite-target: /
+      nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    hosts:
+      - host: java-bootstrap.prod.local
+        paths:
+          - path: /
+            pathType: Prefix
+    tls:
+      - secretName: java-bootstrap-tls
+        hosts:
+          - java-bootstrap.prod.local
 
   resources:
     limits:
@@ -23,3 +44,27 @@ k8s-helm-templates:
     requests:
       cpu: 500m
       memory: 768Mi
+
+  livenessProbe:
+    httpGet:
+      path: /actuator/health/liveness
+      port: 8080
+    initialDelaySeconds: 45
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 3
+
+  readinessProbe:
+    httpGet:
+      path: /actuator/health/readiness
+      port: 8080
+    initialDelaySeconds: 35
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 3
+
+  autoscaling:
+    enabled: true
+    minReplicas: 3
+    maxReplicas: 10
+    targetCPUUtilizationPercentage: 75
