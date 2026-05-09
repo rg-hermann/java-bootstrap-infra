@@ -2,7 +2,7 @@ k8s-helm-templates:
   replicaCount: 1
   image:
     repository: ghcr.io/rg-hermann/java-bootstrap
-    tag: "cd29cb8773b0000b58ef00d8823d3d604ded4352"
+    tag: "1c6243f7337af62b9bac76f393b110114aebf1cc"
     pullPolicy: Always
   config:
     SPRING_PROFILES_ACTIVE: "dev"
