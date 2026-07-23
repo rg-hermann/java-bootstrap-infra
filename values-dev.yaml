@@ -19,7 +19,9 @@ k8s-helm-templates:
 
   # Secret criado externamente (External Secrets, Sealed Secrets ou manualmente)
   secret:
-    existingSecret: java-bootstrap-dev-secrets
+    # existingSecret: java-bootstrap-dev-secrets
+    stringData:
+      DB_PASSWORD: "somente para testes locais; prefira existingSecret"
 
   resources:
     limits:
