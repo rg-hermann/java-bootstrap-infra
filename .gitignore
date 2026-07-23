@@ -9,3 +9,5 @@ charts/k8s-helm-templates/
 
 # ArgoCD / K8s local configs
 kubeconfig.yaml
+
+Chart.lock
