@@ -91,19 +91,19 @@ k8s-helm-templates:
   #   - name: migrate
   #     image: ghcr.io/rg-hermann/java-bootstrap:latest
   #     command: ["/bin/sh", "-c", "./migrate"]
-  volumes:
-    - name: config
-      configMap:
-        name: java-bootstrap-config
-    - name: data
-      persistentVolumeClaim:
-        claimName: java-bootstrap-data
-  volumeMounts:
-    - name: config
-      mountPath: /app/config
-      readOnly: true
-    - name: data
-      mountPath: /app/data
+  # volumes:
+  #   - name: config
+  #     configMap:
+  #       name: java-bootstrap-config
+  #   - name: data
+  #     persistentVolumeClaim:
+  #       claimName: java-bootstrap-data
+  # volumeMounts:
+  #   - name: config
+  #     mountPath: /app/config
+  #     readOnly: true
+  #   - name: data
+  #     mountPath: /app/data
   # nodeSelector:
   #   workload: apps
   # tolerations:
