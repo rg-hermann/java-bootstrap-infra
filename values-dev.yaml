@@ -53,7 +53,7 @@ k8s-helm-templates:
     hosts:
       - host: java-bootstrap.local
         paths:
-          - path: /
+          - path: /actuator/health/readiness
             pathType: Prefix
   livenessProbe:
     httpGet:
