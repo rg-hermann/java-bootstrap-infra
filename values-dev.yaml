@@ -34,7 +34,7 @@ k8s-helm-templates:
     targetPort: 8080
 
   serviceAccount:
-    create: true
+    create: false
 
   probes:
     enabled: true
@@ -80,8 +80,8 @@ k8s-helm-templates:
   podDisruptionBudget:
     enabled: false
 
-  autoscaling:
-    enabled: false
+  # autoscaling:
+  #   enabled: false
 
   # Exemplos opcionais:
   # envFrom:
@@ -91,19 +91,19 @@ k8s-helm-templates:
   #   - name: migrate
   #     image: ghcr.io/rg-hermann/java-bootstrap:latest
   #     command: ["/bin/sh", "-c", "./migrate"]
-  # volumes:
-  #   - name: config
-  #     configMap:
-  #       name: java-bootstrap-config
-  #   - name: data
-  #     persistentVolumeClaim:
-  #       claimName: java-bootstrap-data
-  # volumeMounts:
-  #   - name: config
-  #     mountPath: /app/config
-  #     readOnly: true
-  #   - name: data
-  #     mountPath: /app/data
+  volumes:
+    - name: config
+      configMap:
+        name: java-bootstrap-config
+    - name: data
+      persistentVolumeClaim:
+        claimName: java-bootstrap-data
+  volumeMounts:
+    - name: config
+      mountPath: /app/config
+      readOnly: true
+    - name: data
+      mountPath: /app/data
   # nodeSelector:
   #   workload: apps
   # tolerations:
@@ -118,11 +118,11 @@ k8s-helm-templates:
   #     labelSelector:
   #       matchLabels:
   #         app.kubernetes.io/name: java-bootstrap
-  # autoscaling:
-  #   enabled: true
-  #   minReplicas: 2
-  #   maxReplicas: 5
-  #   targetCPUUtilizationPercentage: 70
+  autoscaling:
+    enabled: true
+    minReplicas: 2
+    maxReplicas: 5
+    targetCPUUtilizationPercentage: 70
   # secret:
   #   existingSecret: java-bootstrap-dev-secrets
   #   stringData:
